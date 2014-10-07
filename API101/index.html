@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>TechDiversified Worshop - The Power of APIs</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Ryan Whitley">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+        <link rel="stylesheet" href="css/custom.css">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>The Power of APIs</h1>
+					<h3>TechDiversified Technical Workshop</h3>
+					<p>
+						<small>Created by <a href="http://www.techdiversified.org">Ryan Whitley</a> / <a href="http://twitter.com/apollolm">@apollolm</a></small>
+					</p>
+				</section>
+
+				<section>
+					<h2>What is an API?</h2>
+					<p>
+                        Application Programming Interface
+                    </p>
+                    <p>
+						An API is a way for your program to 'talk' to another computer system and retrieve information.
+					</p>
+
+					<aside class="notes">
+						Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
+					</aside>
+				</section>
+                <section>
+                    <h2>Say What?</h2>
+                    <img src="gifs/confused.gif" style="height:400px" />
+                </section>
+                <section>
+                    <h2>Why is this important?</h2>
+                    <p>
+                        APIs open up the world to your apps.
+                    </p>
+                    <p>
+                        Access to real time data
+                    </p>
+                    <p>
+                        Mashup multiple datasets in a single app
+                    </p>
+                    <p>
+                        App integration
+                    </p>
+
+                    <aside class="notes">
+                        Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
+                    </aside>
+                </section>
+                <section>
+                    <h2>USES</h2>
+                    <ul>
+                        <li>
+                            Google Maps - Find restaurants within 1 mi of your location
+                        </li>
+                        <li>
+                            Facebook - Sign into a 3rd party website using FB credentials
+                        </li>
+                        <li>
+                            Wikipedia - Find definitions for any topic that exists
+                        </li>
+                        <li>
+                            Meetup - List upcoming events, attendees and details
+                        </li>
+
+                    </ul>
+
+                    <aside class="notes">
+                        Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
+                    </aside>
+                </section>
+                <section>
+                    <section>
+                        <h2>Example Please...</h2>
+                        <p>
+                            Let's say you have an idea to build an app that lists real-time 911 Fire Department calls (just go with it).
+                        </p>
+                        <p>
+                            Several ways to get that list:
+                        </p>
+                        <a href="#" class="image navigate-down">
+                            <img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
+                        </a>
+                        <aside class="notes">
+                            Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
+                        </aside>
+                    </section>
+                    <section>
+                        <h2>Data Gathering - Method 1</h2>
+                        <p>
+                            Buy a police scanner and listen for all 911 calls that go to the Fire Department.
+                        </p>
+                        <br>
+                        <br>
+                        <p>
+                           This is time consuming and error prone.  AND, you have to constantly listen to the scanner 24/7 to keep it up to date.
+                           You'd also have to write them all down or keep a spreadsheet with all of the details.
+                        </p>
+                    </section>
+                    <section>
+                        <h2>Data Gathering - Method 2</h2>
+                        <p>
+                            Have teams of people stationed at every fire station in Seattle.  Whenever a fire truck pulls out, follow it and note the details.
+                        </p>
+                        <br>
+                        <br>
+                        <p>
+                            Yeah, right.
+                        </p>
+                    </section>
+                    <section>
+                        <h2>Data Gathering - Method 3</h2>
+                        <p>
+                            Let somebody else worry about data collection!<br>
+                            Use an API!
+                        </p>
+                        <br>
+                        <br>
+                        <p>
+                            Thankfully, the City of Seattle has a data portal -
+                            <a href="http://data.seattle.gov" target="_blank">http://data.seattle.gov</a>
+                        </p>
+                        <br>
+                        <p>
+                            Look at the 911 data:
+                            <a href="http://data.seattle.gov/resource/kzjm-xkqj.json" target="_blank">http://data.seattle.gov/resource/kzjm-xkqj.json</a>
+                        </p>
+                        <aside class="notes">
+                            Adding the query results in datetime being spit out.
+                            http://data.seattle.gov/resource/kzjm-xkqj.json?type=Aid%20Response
+                        </aside>
+                    </section>
+                </section>
+
+                <!-- Example of nested vertical slides -->
+				<section>
+					<section>
+						<h2>You Try It</h2>
+                        <p>
+                            Time: ~15 Minutes
+                        </p>
+                        <ol>
+                            <li>
+                                Create a folder on your machine.  Call it API101.
+                            </li>
+                            <li>
+                                Open a text editor on your machine, and save a file called list.html to the API101 folder.
+                            </li>
+                            <li>
+                                Go to <a href="https://gist.github.com/apollolm/" target="_blank">https://gist.github.com/apollolm</a> and copy the api101 starter HTML code.
+                            </li>
+                            <li>
+                                Paste the code into your list.html file in your text editor.  Save.
+                            </li>
+                            <li>
+                                Double click list.html to open it in a browser.
+                            </li>
+                        </ol>
+						<p>
+						</p>
+						<a href="#" class="image navigate-down">
+							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
+						</a>
+					</section>
+
+				</section>
+
+                <section>
+                    <section>
+                        <h2>OK.  What just happened?</h2>
+                        <p>
+                            Don't worry.  We'll go thru step by step.
+                        </p>
+                    </section>
+                    <section>
+                        <h2>Step 1</h2>
+                        <p>
+                            HTML - the container for data to go into
+                        </p>
+                    </section>
+                    <section>
+                        <h2>Step 2</h2>
+                        <p>
+                            Load jQuery - a javascript helper library
+                        </p>
+                    </section>
+                    <section>
+                        <h2>Step 3</h2>
+                        <p>
+                            Call to the API (getJSON) - wait for response
+                        </p>
+                    </section>
+                    <section>
+                        <h2>Step 4</h2>
+                        <p>
+                            Loop over each result and write it into the container
+                        </p>
+                    </section>
+                    <section>
+                        <h2>The result?</h2>
+                        <p>
+                            A boring, ugly list.
+                        </p>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>911 Data - Take 2</h2>
+                        <p>
+                            Time: ~10 Minutes
+                        </p>
+                        <ol>
+                            <li>
+                                Open a text editor on your machine, and save a new file called map.html to the API101 folder.
+                            </li>
+                            <li>
+                                Go to <a href="https://gist.github.com/apollolm/" target="_blank">https://gist.github.com/apollolm</a> and copy the map.html HTML code.
+                            </li>
+                            <li>
+                                Paste the code into your map.html file in your text editor.  Save.
+                            </li>
+                            <li>
+                                Double click map.html to open it in a browser.
+                            </li>
+                        </ol>
+                        <p>
+                        </p>
+                        <a href="#" class="image navigate-down">
+                            <img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
+                        </a>
+                    </section>
+
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Recap</h2>
+                        <p>
+
+                        </p>
+                    </section>
+                    <section>
+                        <h2>Step 1</h2>
+                        <p>
+                            Same as before, but add a mapContainer div
+                        </p>
+                    </section>
+                    <section>
+                        <h2>Step 2</h2>
+                        <p>
+                            Load Leaflet - a mapping library
+                        </p>
+                    </section>
+                    <section>
+                        <h2>Step 3</h2>
+                        <p>
+                            Call to the API (getJSON) - wait for response
+                        </p>
+                    </section>
+                    <section>
+                        <h2>Step 4</h2>
+                        <p>
+                            Loop over each result and write it into the container
+                        </p>
+                        <p>
+                            Also, add the item to the map
+                        </p>
+                    </section>
+                    <section>
+                        <h2>The result?</h2>
+                        <p>
+                            A slightly more usable visualization
+                        </p>
+                    </section>
+                </section>
+
+                <section>
+                    <h2>Try a few things</h2>
+                    <p>
+                        Time: ~10 minutes
+                    </p>
+                    <p>
+                        Try sorting or filtering the list by type (Try to only show the type 'Aid Response')
+                    </p>
+                    <p>
+                        Try adding another piece of information to the list - incident # perhaps?
+                    </p>
+                    <p>
+                        Try adding another dataset you find at http://data.seattle.gov - more items on the map, create a separate list
+                    </p>
+                </section>
+
+				<section>
+					<h2>Let's take a look at some other APIs</h2>
+					<p>
+						Meetup - <a href="http://www.meetup.com/meetup_api/" target="_blank">http://www.meetup.com/meetup_api/</a>
+					</p>
+                    <p>
+                        Foursquare - <a href="https://developer.foursquare.com/" target="_blank">https://developer.foursquare.com/</a>
+                    </p>
+                    <p>
+                        Google (Tons of APIs) - <a href="https://developers.google.com/apis-explorer/#p/" target="_blank">Google API Explorer</a>
+                    </p>
+                    <p>
+                        Facebook - <a href="https://developers.facebook.com/docs/graph-api/quickstart/v2.1" target="_blank">Facebook Graph API</a>
+                    </p>
+
+				</section>
+
+                <section>
+                    <h2>What Next?</h2>
+                    <p>
+                        Go forth, find interesting APIs, and start to fit some pieces together for your app
+                    </p>
+
+                </section>
+
+
+                <section>
+                    <h2>Questions?</h2>
+
+
+                </section>
+
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
