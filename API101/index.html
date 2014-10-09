@@ -56,7 +56,7 @@
 					<p>
                         Application Programming Interface
                     </p>
-                    <p>
+                    <p class="fragment fade-in">
 						An API is a way for your program to 'talk' to another computer system and retrieve information.
 					</p>
 
@@ -73,19 +73,93 @@
                     <p>
                         APIs open up the world to your apps.
                     </p>
-                    <p>
+                    <p class="fragment fade-in">
                         Access to real time data
                     </p>
-                    <p>
+                    <p class="fragment fade-in">
                         Mashup multiple datasets in a single app
                     </p>
-                    <p>
+                    <p class="fragment fade-in">
                         App integration
                     </p>
 
                     <aside class="notes">
                         Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
                     </aside>
+                </section>
+                <section>
+                    <h2>How does it work?</h2>
+                    <p>
+                        There are standards and common ways of access.
+                    </p>
+                    <p class="fragment fade-in">
+                        REST APIs - Looks like a URL<br>
+                        <span class="fragment fade-in" style="font-size: 20px">(Representational State Transfer)</span>
+                    </p>
+
+                   <pre class="fragment fade-in">
+                    <code>http://data.seattle.gov/resource/7ais-f98f.json?$limit=10&offense_type=ASSLT-AGG-GUN
+                    </code>
+                   </pre>
+                    <aside class="notes">
+                        Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
+                    </aside>
+                </section>
+                <section>
+                    <h2>Here's what you get back</h2>
+                    <p>
+                        Common API response formats:
+                    </p>
+                    <p class="fragment fade-in">
+                        JSON - Javascript Object Notation
+                    </p>
+                    <p class="fragment fade-in">
+                        XML
+                    </p>
+                    <pre class="fragment fade-in">
+                       <code class="json">
+   [
+       {
+           offense_code: 1304
+           offense_type: ASSLT-AGG-GUN
+           census_tract_2000: 10100.5012
+           date_reported: 2010-04-18T02:13:00
+           location: {
+               needs_recoding: false
+               longitude: -122.288423546
+               latitude: 47.564962186
+           }
+           zone_beat: R1
+           offense_code_extension: 0
+           district_sector: R
+           hundred_block_location: 42XX BLOCK OF RAINIER AVE S
+           summarized_offense_description: ASSAULT
+           month: 4
+           general_offense_number: 2010125661
+           year: 2010
+           longitude: -122.288423546
+           summary_offense_code: 1300
+           latitude: 47.564962186
+           rms_cdw_id: 31454
+           occurred_date_or_date_range_start: 2010-04-18T01:30:00
+   },
+   {
+           offense_code: 1304
+           offense_type: ASSLT-AGG-GUN
+           census_tract_2000: 9300.2017
+           date_reported: 2010-04-25T05:30:00
+           location: {
+               needs_recoding: false
+               longitude: -122.334193864
+               latitude: 47.593625482
+           }
+           occurred_date_range_end: 2010-04-25T05:30:00
+           zone_beat: K3
+           offense_code_extension: 0
+           district_sector: K
+           hundred_block_location: 9XX BLOCK
+                       </code>
+                    </pre>
                 </section>
                 <section>
                     <h2>USES</h2>
@@ -101,6 +175,9 @@
                         </li>
                         <li>
                             Meetup - List upcoming events, attendees and details
+                        </li>
+                        <li>
+                            Twitter - Find any tweet with the word "Seahawks"
                         </li>
 
                     </ul>
@@ -170,6 +247,18 @@
                             http://data.seattle.gov/resource/kzjm-xkqj.json?type=Aid%20Response
                         </aside>
                     </section>
+                    <section>
+                        <h2>Get to know the API</h2>
+                        <p>
+                            Each API has a specific set of 'endpoints'
+                        </p>
+                        <p class="fragment fade-in">
+                           Endpoints do a single job - handle a single topic
+                        </p>
+                        <p class="fragment fade-in">
+                            Find the endpoint(s) that provide the data you want
+                        </p>
+                    </section>
                 </section>
 
                 <!-- Example of nested vertical slides -->
@@ -217,30 +306,87 @@
                         <p>
                             HTML - the container for data to go into
                         </p>
+<pre>
+    <code class="html">
+        &lt;!doctype html&gt;
+        &lt;html lang="en"&gt;
+
+        &lt;head&gt;
+        &lt;meta charset="utf-8"&gt;
+        &lt;title&gt;TechDiversified Worshop - The Power of APIs&lt;/title&gt;
+        &lt;/head&gt;
+
+        <body>
+        <h1>List of 911 Responses</h1>
+
+        <div id="myResults"></div>
+
+        &lt;/body&gt;
+        &lt;/html&gt;
+    </code>
+</pre>
                     </section>
                     <section>
                         <h2>Step 2</h2>
                         <p>
                             Load jQuery - a javascript helper library
                         </p>
+                        <pre>
+    <code class="html">
+        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    </code>
+</pre>
                     </section>
                     <section>
                         <h2>Step 3</h2>
                         <p>
                             Call to the API (getJSON) - wait for response
                         </p>
+<pre>
+    <code class="html">
+        <script type="text/javascript">
+            //Use jQuery to call the API and get results
+
+            $(document).ready(function(){
+
+                //This is the URL (address) to the API endpoint you're interested in
+                var URL = "http://data.seattle.gov/resource/kzjm-xkqj.json";
+
+                $.getJSON(URL, function(result){
+
+                    //After the API is successfully called, the flow comes here.
+
+
+                });
+            });
+        </script>
+    </code>
+</pre>
                     </section>
                     <section>
                         <h2>Step 4</h2>
                         <p>
                             Loop over each result and write it into the container
                         </p>
+<pre>
+    <code class="javascript">
+        //After the API is successfully called, the flow comes here.
+        $.each(result, function(idx, item){
+            $("#myResults").append(item.type);
+            $("#myResults").append("<br>");
+        });
+    </code>
+</pre>
+
+
                     </section>
                     <section>
                         <h2>The result?</h2>
                         <p>
                             A boring, ugly list.
                         </p>
+                        <img src="img/list.png" style="width: 400px" />
+
                     </section>
                 </section>
 
@@ -285,18 +431,71 @@
                         <p>
                             Same as before, but add a mapContainer div
                         </p>
+<pre>
+    <code class="html">
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+
+        <style>
+
+            #mapContainer { height: 380px; width: 50%; }
+
+        </style>
+
+        <div id=" mapContainer">
+
+        </div>
+    </code>
+</pre>
                     </section>
                     <section>
                         <h2>Step 2</h2>
                         <p>
                             Load Leaflet - a mapping library
                         </p>
+<pre>
+    <code class="html">
+        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+        <script type="text/javascript">
+            //initialize the map
+            var map = L.map('mapContainer').setView([47.65, -122.4], 11);
+
+            //Add a basemap
+            L.tileLayer('http://{s}.tiles.mapbox.com/v3/spatialdev.map-c9z2cyef/{z}/{x}/{y}.png').addTo(map);
+        </script>
+    </code>
+</pre>
+
                     </section>
                     <section>
                         <h2>Step 3</h2>
                         <p>
                             Call to the API (getJSON) - wait for response
                         </p>
+                        <p>
+                            Same as before
+                        </p>
+<pre>
+    <code class="html">
+        <script type="text/javascript">
+            //Use jQuery to call the API and get results
+
+            $(document).ready(function(){
+
+                //This is the URL (address) to the API endpoint you're interested in
+                var URL = "http://data.seattle.gov/resource/kzjm-xkqj.json";
+
+                $.getJSON(URL, function(result){
+
+                    //After the API is successfully called, the flow comes here.
+
+
+                });
+            });
+        </script>
+    </code>
+</pre>
                     </section>
                     <section>
                         <h2>Step 4</h2>
@@ -306,12 +505,30 @@
                         <p>
                             Also, add the item to the map
                         </p>
+<pre>
+    <code class="javascript">
+        //After the API is successfully called, the flow comes here.
+        $.each(result, function(idx, item){
+            //Write the item to a list
+            $("#myResults").append(item.type);
+            $("#myResults").append("<br>");
+
+            //Add map marker
+            if(item.latitude && item.longitude){
+                L.marker([item.latitude, item.longitude]).addTo(map);
+            }
+        });
+    </code>
+</pre>
+
+
                     </section>
                     <section>
                         <h2>The result?</h2>
                         <p>
                             A slightly more usable visualization
                         </p>
+                        <img src="img/map.png" style="width: 400px" />
                     </section>
                 </section>
 
@@ -349,6 +566,26 @@
 				</section>
 
                 <section>
+                    <h2>I Lied</h2>
+                    <p class="fragment fade-in">
+                        Well not really.
+                    </p>
+                    <p class="fragment fade-in">
+                        But APIs can do more than just fetch data.
+                    </p>
+                    <p class="fragment fade-in">
+                        Certain APIs let you put new data in.
+                    </p>
+                    <p class="fragment fade-in">
+                        Or delete or alter data.
+                    </p>
+                    <p class="fragment fade-in">
+                        You could build your own API to track your location (for example)
+                    </p>
+
+                </section>
+
+                <section>
                     <h2>What Next?</h2>
                     <p>
                         Go forth, find interesting APIs, and start to fit some pieces together for your app
@@ -356,6 +593,22 @@
 
                 </section>
 
+                <section>
+                    <h2>In summary</h2>
+                    <p>
+                        APIs provide your apps, websites or scripts access to data from the outside world.
+                    </p>
+                    <p class="fragment fade-in">
+                        Make your program come alive <span class="fragment fade-in">(not literally)</span><span class="fragment fade-in">(yet)</span>
+                    </p>
+                    <p class="fragment fade-in">
+                        Build new apps off of existing data - make older experiences better
+                    </p>
+                    <p class="fragment fade-in">
+
+                    </p>
+
+                </section>
 
                 <section>
                     <h2>Questions?</h2>
