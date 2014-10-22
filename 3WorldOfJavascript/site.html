@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>TechDiversified Worshop - The World of JavaScript</title>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+
+    <style>
+        .section{
+            margin: 20px 0;
+        }
+
+        .gps_ring {
+            border: 2px solid #51F1FF;
+            -webkit-border-radius: 30px;
+            border-radius: 30px;
+            height: 18px;
+            width: 18px;
+            -webkit-animation: pulsate 1s ease-out;
+            -webkit-animation-iteration-count: infinite;
+            opacity: 0.0
+        }
+        @-webkit-keyframes pulsate {
+            0% {-webkit-transform: scale(0.1, 0.1); opacity: 0.0;}
+            50% {opacity: 1.0;}
+            100% {-webkit-transform: scale(1.2, 1.2); opacity: 0.0;}
+        }
+
+    </style>
+</head>
+
+<body>
+<h1>DooHickey.com</h1>
+
+<div id="controlArea">
+    <span>Welcome to Doohickey.com.  Click the button to see some amazing things.</span>
+</div>
+<div class="section">
+    <input id="button1" type="button" value="Click Me!"/>
+
+    <div id="resultArea" style="padding-top: 50px;">
+        When you click the button, this should change.
+    </div>
+</div>
+<div class="section">
+    <div id="mouseOverArea" style="height: 100px; width: 100px; padding: 20px; background-color: green;color: white;">
+        Move your mouse over this area.
+    </div>
+    <span id="mouseCounter">You've moused over 0 times.</span>
+</div>
+<div class="section">
+    <span>Map of your current location</span>
+
+    <div id="mapContainer" style="height: 200px; width: 200px; padding: 20px; color: white;">
+
+    </div>
+</div>
+<div class="section">
+    <input type="button" id="hammerTimeButton" value="Stop...Hammertime!">
+    <div id="hammerTimeContainer">
+
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+<script type="text/javascript">
+    //initialize the map
+    var map = L.map('mapContainer').setView([47.65, -122.4], 11);
+
+    //Add a basemap
+    L.tileLayer('https://{s}.tiles.mapbox.com/v3/examples.map-qfyrx5r8/{z}/{x}/{y}.png').addTo(map);
+</script>
+
+
+
+
+<script>
+    //After everything has loaded and is hunky-dory
+    $(document).ready(function(){
+
+        //Tell jQuery to listen for the button to be clicked.
+        $("#button1").on('click', function(){
+            $("#resultArea").html("<div>You just pushed the button!</div>");
+        });
+
+
+
+
+        //Tell jQuery to listen for the hammertime button to be clicked!
+        $("#hammerTimeButton").on('click', function(){
+            $("#hammerTimeContainer").html("<img src='http://media.giphy.com/media/hxc32veg6tbqg/giphy.gif' />");
+        });
+
+
+
+        //Tell jQuery to listen for the mouse to move over the green square.
+        //Let's keep a count of how many times this happens
+        var greenBoxCounter = 0; //start it off at 0
+
+        $("#mouseOverArea").on('mouseover', function(){
+            //Add 1 to the count
+            greenBoxCounter = greenBoxCounter + 1; //you could also do this: greenBoxCounter++;
+
+            //Update the text inside the mouse counter area so the user can see how many times they've done it.
+            $("#mouseCounter").html('You\'ve moused over ' + greenBoxCounter + ' times.');
+        });
+
+
+
+        //Get the browser's location and put it on the map
+
+        //Keep a placeholder that will store the user's location information once we have it.
+        var userLocation;
+
+        //Not all browsers can do this.  Check to see if it can.
+        if(navigator.geolocation){
+            //If we made it here, we're good.  Get the position.  Once the location is found, call the function called 'gotPosition'
+            navigator.geolocation.getCurrentPosition(gotPosition);
+        }
+        else{
+            alert("Geolocation is not available.");
+        }
+
+        //Let's create a function called 'gotPosition' that will be called once the user's location has been found.
+        function gotPosition(position){
+            //Position contains the coordinates of the user's position
+            userLocation = position; //store it in a 'global variable' so it can be used by any javascript functions in this page
+
+
+            //Add to map
+            var myIcon = L.divIcon({className: '', html: '<img class="gps_ring" />'});
+            L.marker([position.coords.latitude, position.coords.longitude], {icon: myIcon}).addTo(map);
+
+            //zoom the map to the current location
+            map.setView([position.coords.latitude, position.coords.longitude]);
+        }
+
+
+    });
+</script>
+</body>
+</html>

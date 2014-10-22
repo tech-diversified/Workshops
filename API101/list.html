@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>TechDiversified Worshop - The Power of APIs</title>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <h1>List of 911 Responses</h1>
+
+    <div id="myResults">
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+    <script type="text/javascript">
+        //Use jQuery to call the API and get results
+
+        $(document).ready(function(){
+
+            //This is the URL (address) to the API endpoint you're interested in
+            var URL = "http://data.seattle.gov/resource/kzjm-xkqj.json";
+
+            $.getJSON(URL, function(result){
+
+                //After the API is successfully called, the flow comes here.
+                $.each(result, function(idx, item){
+                    $("#myResults").append(item.type);
+                    $("#myResults").append("<br>");
+                });
+
+            });
+
+        });
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>keypress demo</title>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script>
+
+        $(document).ready(function(){
+            $("body").on('keypress', function(e){
+                $("#resultArea").html(String.fromCharCode(e.which));
+            });
+        });
+
+    </script>
+</head>
+<body>
+<h1>DooHickey.com</h1>
+
+<div id="controlArea"> <span>Welcome to Doohickey.com.  Click the button to see some amazing things.</span>
+</div>
+
+<div id="resultArea" style="padding-top: 50px;">Your custom doohickies will show up here.</div>
+
+</body>
+</html>
