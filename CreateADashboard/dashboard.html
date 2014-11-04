@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Seattle Crime Dashboard</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+
+    <link rel="stylesheet" href="css/dashboard.css" />
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+    <div id="header">Crime Dashboard</div>
+    <div id="main" class="width-restriction">
+
+        <div id="intro">
+            <h2></h2>
+            <p>
+                This interactive dashboard summarizes reported crimes by police beat as reported by the Seattle Police Department.
+                Data is pulled from Seattle's <a href="http://data.seattle.gov" target="_blank">Open Data Portal</a>, and is for illustrative purposes only.
+
+            </p>
+        </div>
+
+
+        <div id="dropdownContainer">
+            <span>Choose an offense type to filter the dashboard:</span>
+            <span class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                    Offense Type
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
+                </ul>
+            </span>
+        </div>
+
+
+        <div id="leftContainer">
+
+            <div id="mapTitle" class="section-title">Police Beat Map</div>
+            <div id="mapContainer">
+
+            </div>
+
+            <div id="chartContainer" class="clearfix">
+                <div id="chart">
+
+                </div>
+            </div>
+        </div>
+
+        <div id="rightContainer">
+            <div id="tableContainer">
+                <div class="section-title">List of Police Beats & Crimes</div>
+
+                <!-- Placeholder for the table rows -->
+                <table id="beatTable" class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Beat</th>
+                        <th># Offenses</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tabularBody">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/modules/data.js"></script>
+
+    <script type="text/javascript">
+
+
+    </script>
+
+
+
+
+
+
+
+
+
+    <script type="text/javascript">
+        //Use jQuery to call the API and get results
+        $(document).ready(function() {
+
+            var map, beat_layer; //Global variable 'gods' - they can be seen by all and used throughout the app
+
+            //Call buildmap function
+            buildMap(function(){
+                //When buildMap is done, it will come here
+
+                //Call the API and get the data
+                loadData();
+            });
+
+
+
+            function loadData(){
+                //This is the URL (address) to the API endpoint you're interested in
+                var URL = "http://data.seattle.gov/resource/3k2p-39jp.json";
+
+                //Load data and group by district - when done fetching the data, go to groupCrimesByPoiceBeat function
+                $.getJSON(URL, processData);
+            }
+
+            //Create the map.  Add basemap and police beats.
+            function buildMap(callback){
+                //initialize the map
+                map = L.map('mapContainer').setView([47.65, -122.4], 10);
+                beat_layer; //A placeholder that will store the map layer of police beats
+
+                //Add a basemap
+                L.tileLayer('http://{s}.tiles.mapbox.com/v3/spatialdev.map-c9z2cyef/{z}/{x}/{y}.png').addTo(map);
+
+                //Create map style for police beats
+                var beatStyle = {
+                    fill: true,
+                    fillColor: 'blue',
+                    weight: 2,
+                    opacity:0.2,
+                    color: '#ffffff',
+                    fillOpacity: 0.2
+                };
+
+                //Use jQuery to ask for the police beat data
+                $.getJSON("data/Seattle-Police-Beats.geojson", function(beats){
+
+                    //Add the police beats to map, using the style set above.  Save to beat_layer variable.
+                    beat_layer = L.geoJson(beats, { style: beatStyle }).addTo(map);
+
+                    //When we're thru, tell the callback to fire
+                    callback();
+
+                });
+            }
+
+
+
+            //take in the data from the API.
+            //Format it for the table, map and charts.
+            function processData(results) {
+
+                //Do the Map Stuff
+                handleDataForMap(results);
+
+                //Do the Table Stuff
+                handleDataForTable(results);
+
+                //Build Chart
+                createChart();
+
+            }
+
+
+            function handleDataForMap(results){
+                //First - Let's format the data for the map.
+                //In order to color code the map based on the number of crimes, we need to break up the crime data by police beat.
+                var beats = groupCrimesByPoliceBeat(results);
+
+                //Now take the beats object and merge it with the beats map (.geojson) file to color code the map
+                $.each(beat_layer._layers, function (key, beat) {
+
+                    //Find the beat number from the map feature.
+                    //Grab the cooresponding crime number from the beats object.
+                    var beat_id = beat.feature.properties.BEAT;
+
+
+                    //crimeCount is the number from the beats object.
+                    var crimeCount = beats[beat_id];
+
+                    //Bake this count into the map feature.
+                    beat.feature.properties.crime_count = crimeCount;
+
+                    //Update map style
+                    beat_layer.setStyle(getColorByNumberOfCrimes);
+                })
+            }
+
+            function handleDataForTable(results){
+
+                //Clear the table every time this is called
+                $("#tabularBody").empty();
+
+                //In the function above (handleDataForMap), we assigned each boundary a crime_count.
+                //Let's loop thru again and write out each beat to the table
+
+                $.each(beat_layer._layers, function (key, beat) {
+
+                    var beat_id = beat.feature.properties.BEAT;
+                    var district_id = beat.feature.properties.PRECINCT;
+                    var crime_count = beat.feature.properties.crime_count;
+
+                    //Create a table row element
+                    //The HTML Looks Like This
+                    //<tr>
+                    //  <td>
+                    //    District N
+                    //  </td>
+                    //  <td>
+                    //    Zone B3
+                    //  </td>
+                    //  <td>
+                    //    23
+                    //  </td>
+                    //</tr>
+
+
+                    //only show if the value of crime_count is something (skip nulls or undefined values)
+                    if(crime_count){
+                        $("#tabularBody").append('<tr><td>' + beat_id + '</td><td>' + crime_count + '</td></tr>');
+                    }
+
+                })
+            }
+
+            function createChart(){
+                //Highcharts has a cool option I saw that lets you point it at an HTML table.
+                //Good thing.  We just got done filling our table with data!
+
+                $('#chart').highcharts({
+                    data: {
+                        table: $('#beatTable')[0]
+                    },
+                    chart: {
+                        type: 'bar'
+                    },
+                    title: {
+                        text: 'Number of Crimes by Police Beat'
+                    },
+                    yAxis: {
+                        allowDecimals: false,
+                        title: {
+                            text: 'Beats'
+                        }
+                    }
+                });
+            }
+
+            //Used to determine RED/GREEN/YELLOW color based on the number of crimes.
+            function getColorByNumberOfCrimes(feature){
+
+                var crimeCount = feature.properties.crime_count;
+                var beat_color;
+
+                //using the crimeCount number, decide whether to color the beat on the map RED, YELLOW or GREEN.
+                if(crimeCount >= 0 && crimeCount < 15){
+
+                    beat_color = "#00ff00"; //Low Crime, Green
+
+                }else if(crimeCount >= 15 && crimeCount < 30) {
+
+                    beat_color = "#ffff00"; //Medium Crime, Yellow
+
+                }else if(crimeCount >= 30) {
+
+                    beat_color = "#ff0000"; //High Crime, Red
+
+                }
+                else{
+                    //In case something weird happens with the nubmers and one of the above cases isn't triggered
+                    beat_color = "#000000"; //Black
+                }
+
+                //Return whatever color was chosen above
+                return { fillColor: beat_color };
+
+            }
+
+
+            //Take the crime object we got back from the API call, and see what's inside.
+            //Create counts of categories (types) of crimes and/or beat (zone_beat).
+            function groupCrimesByPoliceBeat(results) {
+                var crimesByDistrict = {};
+
+                $.each(results, function (idx, item) {
+                    if (item && item.zone_beat) {
+
+                        //See if this category exists in our crimesByDistrict object.
+                        if (crimesByDistrict[item.zone_beat]) {
+                            //The category exists.
+                            //Just increase the count.
+                            crimesByDistrict[item.zone_beat] = crimesByDistrict[item.zone_beat] + 1;
+                        }
+                        else {
+                            //The category doesn't exist.
+                            //Add the category and increase the counter.
+                            crimesByDistrict[item.zone_beat] = 1; //Start the count for this beat at 1.
+                        }
+
+
+                    }
+                });
+
+                return crimesByDistrict;
+            }
+
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+/* Dashboard Styles */
+
+.width-restriction{
+    width: 960px;
+}
+
+.clearfix:before, .clearfix:after {
+    content: " ";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+.clearfix {
+    *zoom: 1;
+}
+
+#header{
+    background-color: #353c45;
+    color: #fff;
+    padding: 10px;
+}
+
+#main{
+    margin: 0 auto;
+}
+
+#leftContainer{
+    float: left;
+    width: 45%
+}
+
+#rightContainer{
+    float: right;
+    width: 45%;
+}
+
+#mapContainer {
+    height: 380px;
+}
+
+#tableContainer{
+    margin-left: 25px;
+}
+
+#dropdownContainer{
+    padding: 10px 0;
+    margin: 20px 0;
+}
+
+#chart{
+    margin-top: 40px;
+}
+
+.section-title{
+    font-size: 18px;
+    color: #333333;
+}
