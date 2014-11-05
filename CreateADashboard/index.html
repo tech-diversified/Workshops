@@ -247,9 +247,11 @@
         Such as Sublime, Brackets, Visual Studio, Eclipse, Webstorm, etc.
     </p>
     <p>
-        You can reference the various completed stages of this project <a href=href="https://gist.github.com/apollolm" target="_blank">here</a>.
+        You can reference the various completed stages of this project <a href="https://github.com/tech-diversified/resources" target="_blank">here</a>.
     </p>
-
+    <p>
+        (Click on Dashboard Workshop)
+    </p>
     <p>
         Type or copy the bare bones step1.html into your index.html.
     </p>
@@ -324,11 +326,51 @@
 </section>
 
 <section>
+    <h2>Your Turn!</h2>
+    <p>Time: 10 mins.</p>
+
+    <p>
+        Using step3.html/dashboard3.css, modify the header to have a dark background.  Also, experiment with padding so the title isn't so crammed in there.
+    </p>
+    <span>CSS Hints:</span>
+    <ul>
+        <li>
+            background-color: black; - is CSS to change the background color of a specific element
+        </li>
+        <li>
+            color: white; - CSS to change the text color of a specific element
+        </li>
+        <li>
+            padding: 10px; - CSS to add space between the edge of a div(box) and the stuff inside
+        </li>
+    </ul>
+
+</section>
+
+<section>
+    <h2>Your Turn! - Hints</h2>
+
+<pre>
+    <code class="css">
+        #header{
+            background-color: black;
+            color: white;
+            padding: 10px;
+        }
+    </code>
+</pre>
+
+<p>
+    (By default, div elements are 100% the width of their parent box)
+</p>
+</section>
+
+<section>
     <h2>Step 4</h2>
     <h2>Start a Table</h2>
 
     <p>
-        Find the data URL for the API.
+        Find the data URL for the API. (data.seattle.gov)
     </p>
     <p>
         Let's use jQuery to $.getJSON and pull back the results.
@@ -356,9 +398,78 @@
         Let's add CSS to do that.
     </p>
     <p>
-        Also, let's summarize the crimes by beat.
+        Also, let's summarize the crimes by beat and add a real table.
     </p>
 
+
+</section>
+
+<section>
+    <h2>Step 6</h2>
+    <h2>Color Code map by crimes</h2>
+
+    <p>
+        We already have the counts by beat
+    </p>
+
+    <p>
+        Loop thru the map layer dataset and add in the counts
+    </p>
+
+    <p>
+        Next, create a style function that decides what color to use based on the crime count
+    </p>
+
+    <p>
+        Lastly, tell the map layer to update its style
+    </p>
+
+
+</section>
+
+<section>
+    <h2>You Try</h2>
+
+    <p>Time: 10 mins.</p>
+    <p>
+        In step6.html, alter the getColorByNumberOfCrimes function to add a new 'orange' color.
+    </p>
+    <p>
+        Try Changing the colors and/or ranges (0 - 15, 15 - 30, > 30)
+    </p>
+
+</section>
+
+<section>
+    <h2>Step 7</h2>
+    <h2>Add a bar chart</h2>
+
+    <p>
+       Check out the Highcharts Examples.
+    </p>
+
+    <p>
+        <a href="" target="_blank">Highcharts Site</a>
+    </p>
+
+    <p>
+        Turns out, they have an example of building a chart based on an HTML table...
+    </p>
+
+</section>
+
+
+<section>
+    <h2>Step 8</h2>
+    <h2>Clean up the style</h2>
+
+    <p>
+        Looks like our main components are in place, but spacing is off.
+    </p>
+
+    <p>
+        Let's use CSS to move stuff around
+    </p>
 
 </section>
 
