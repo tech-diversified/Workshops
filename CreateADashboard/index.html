@@ -484,8 +484,33 @@
 </section>
 
 <section>
-    <h2>Links</h2>
+    <h2>What else could we add?</h2>
 
+    <p>
+        Drop down for crime type.
+    </p>
+
+    <p>
+        Click on map boundary to highlight chart and table row.
+    </p>
+
+    <p>
+        Click district to filter all data by.
+    </p>
+
+    <p>
+        Highlight highest crime areas with a border, or a glow.
+    </p>
+
+
+
+</section>
+
+<section>
+    <h2>Links</h2>
+    <p>
+        ...to some of the pages that helped me make the demo.
+    </p>
     http://jsfiddle.net/gh/get/jquery/1.9.1/highslide-software/highcharts.com/tree/master/samples/highcharts/demo/column-parsed/
     http://www.tutorialrepublic.com/twitter-bootstrap-tutorial/bootstrap-tables.php
     http://leafletjs.com/reference.html#geojson-style
@@ -493,314 +518,31 @@
     http://catalog.data.gov/dataset/seattle-police-department-beats/resource/9e6eaf04-7b6a-4959-9417-f7292848c444
 
 </section>
-<section>
-    <h2>What?</h2>
-
-    <p>
-        An HTML webpage is a cold, static, lifeless skeleton
-    </p>
-
-    <p class="fragment fade-in">
-        JavaScript *listens* to stuff happening in the page, and can respond.
-    </p>
-</section>
-<section>
-    <h2>What kind of stuff?</h2>
-
-    <p>
-        JavaScript can detect:
-    </p>
-    <ul>
-        <li class="fragment fade-in">Mouse Clicks</li>
-        <li class="fragment fade-in">Keyboard Interaction</li>
-        <li class="fragment fade-in">Your location (whoa). Really.</li>
-        <li class="fragment fade-in">Other Mouse Movements</li>
-    </ul>
-</section>
-<section>
-    <h2>What else?</h2>
-
-    <p>
-        JavaScript can alter a webpage
-    </p>
-    <ul>
-        <li class="fragment fade-in">Add stuff like text & images</li>
-        <li class="fragment fade-in">Hide or show things</li>
-        <li class="fragment fade-in">Call an API! Get data and show it in a map</li>
-        <li class="fragment fade-in">Pass messages between computers</li>
-    </ul>
-</section>
-<section>
-    <h2>Let's Add in the JavaScript</h2>
-    <p>
-        Copy the code yourself:
-        <br>
-        <a href="https://gist.github.com/apollolm" target="_blank">https://gist.github.com/apollolm</a>
-        <br>
-        Look for site_javascript.html
-    </p>
-    <p>
-        Or, use JSFiddle:<br>
-        <a href="http://jsfiddle.net/apollolm/qzata3c5/" target="_blank">http://jsfiddle.net/apollolm/qzata3c5/</a>
-
-    </p>
-</section>
-<!-- Example of nested vertical slides -->
-
-
-<section>
-<section>
-    <h2>Break it down</h2>
-
-    <p>
-        <img src="img/breakitdown.gif"/>
-    </p>
-
-    <p>
-        Let's go thru step by step.
-    </p>
-</section>
-<section>
-    <h2>Step 1</h2>
-
-    <p>
-        The Button Click
-    </p>
-
-    <p>
-        We need a button.
-    </p>
-<pre>
-    <code class="html">
-        <input id="button1" type="button" value="Click Me!"/>
-    </code>
-</pre>
-</section>
-<section>
-    <h2>Step 2</h2>
-
-    <p>
-        The container
-    </p>
-
-    <p>
-        When we click the button, we'll update some text in a container
-    </p>
-<pre>
-    <code class="html">
-        <div id="resultArea" style="padding-top: 50px;">
-            When you click the button, this should change.
-        </div>
-    </code>
-</pre>
-</section>
-<section>
-    <h2>Step 3</h2>
-
-    <p>
-        The button doesn't do anything until we add some code to tell it to.
-    </p>
-<pre>
-    <code class="javascript">
-        //Tell jQuery to listen for the button to be clicked.
-        $("#button1").on('click', function(){
-        $("#resultArea").html("You just pushed the button!");
-        });
-    </code>
-</pre>
-</section>
-<section>
-    <h2>Step 4</h2>
-
-    <p>
-        The Green Box
-    </p>
-
-    <p>
-        Just a dumb box until we add some code to tell it what to do
-    </p>
-<pre>
-    <code class="html">
-        <div id="mouseOverArea"
-             style="height: 100px; width: 100px; padding: 20px; background-color: green;color: white;">
-            Move your mouse over this area.
-        </div>
-        <span id="mouseCounter">You've moused over 0 times.</span>
-    </code>
-</pre>
-</section>
-<section>
-    <h2>Step 5</h2>
-
-    <p>
-        Listen for mouse event called MouseOver, just for the green box
-    </p>
-<pre>
-    <code class="javascript">
-        //Tell jQuery to listen for the mouse to move over the green square.
-        //Let's keep a count of how many times this happens
-        var greenBoxCounter = 0; //start it off at 0
-
-        $("#mouseOverArea").on('mouseover', function(){
-        //Add 1 to the count
-        greenBoxCounter = greenBoxCounter + 1; //you could also do this: greenBoxCounter++;
-
-        //Update the text inside the mouse counter area so the user can see how many times they've done it.
-        $("#mouseCounter").html('You\'ve moused over ' + greenBoxCounter + ' times.');
-        });
-    </code>
-</pre>
-
-
-</section>
-<section>
-    <h2>Step 6</h2>
-
-    <p>
-        Map container. It's empty until we use javascript to make it come alive!
-    </p>
-<pre>
-    <code class="html">
-        <span>Map of your current location</span>
-
-        <div id=" mapContainer" style="height: 200px; width: 200px; padding: 20px; color: white;">
-
-        </div>
-    </code>
-</pre>
-
-
-</section>
-<section>
-    <h2>Step 7</h2>
-
-    <p>
-        Load the leaflet mapping library (from leafletjs.com)
-    </p>
-<pre>
-    <code class="html">
-        <script type="text/javascript">
-            //initialize the map, zoom to Seattle
-            var map = L.map('mapContainer').setView([47.65, -122.4], 11);
-
-            //Add a basemap
-            L.tileLayer('https://{s}.tiles.mapbox.com/v3/examples.map-qfyrx5r8/{z}/{x}/{y}.png').addTo(map);
-        </script>
-    </code>
-</pre>
-
-
-</section>
-<section>
-    <h2>Step 8</h2>
-
-    <p>
-        Part 1 - Ask for the user's location from JavaScript
-    </p>
-<pre>
-    <code class="javascript">
-        //Keep a placeholder that will store the user's location information once we have it.
-        var userLocation;
-
-        //Not all browsers can do this. Check to see if it can.
-        if(navigator.geolocation){
-        //If we made it here, we're good. Get the position. Once the location is found, call the function called
-        'gotPosition'
-        navigator.geolocation.getCurrentPosition(gotPosition);
-        }
-        else{
-        alert("Geolocation is not available.");
-        }
-    </code>
-</pre>
-</section>
-<section>
-    <h2>Step 8</h2>
-
-    <p>
-        Part 2 - If we get the location, pass it off to a function
-    </p>
-<pre>
-    <code class="javascript">
-        //Let's create a function called 'gotPosition' that will be called once the user's location has been found.
-        function gotPosition(position){
-        //Position contains the coordinates of the user's position
-        userLocation = position; //store it in a 'global variable' so it can be used by any javascript functions in this
-        page
-
-
-        //Add to map
-        var myIcon = L.divIcon({className: '', html: '<img class="gps_ring"/>'});
-        L.marker([position.coords.latitude, position.coords.longitude], {icon: myIcon}).addTo(map);
-
-        //zoom the map to the current location
-        map.setView([position.coords.latitude, position.coords.longitude]);
-        }
-    </code>
-</pre>
-</section>
-<section>
-    <h2>Step 9</h2>
-
-    <p>
-        Hammertime!
-    </p>
-
-    <p>
-        Another button, lifeless until we tell it to respond to a click
-    </p>
-<pre>
-    <code class="html">
-        <input type="button" id="hammerTimeButton" value="Stop...Hammertime!">
-
-        <div id="hammerTimeContainer">
-
-        </div>
-    </code>
-</pre>
-</section>
-<section>
-    <h2>Step 10</h2>
-
-    <p>
-        Listen for the click, then insert an image.
-    </p>
-<pre>
-    <code class="javascript">
-        //Tell jQuery to listen for the hammertime button to be clicked!
-        $("#hammerTimeButton").on('click', function(){
-        $("#hammerTimeContainer").html("<img src='http://media.giphy.com/media/hxc32veg6tbqg/giphy.gif'/>");
-        });
-    </code>
-</pre>
-</section>
-</section>
-
 
 <section>
     <h2>Recap</h2>
 
     <p>
-        What topics did we just cover?
+        We just covered a lot.
     </p>
     <ul>
         <li>
-            jQuery, event binding
+            Libraries (HighCharts, Leaflet, jQuery, Bootstrap)
+        </li>
+        <li>
+            API Calls
+        </li>
+        <li>
+            JSON Data
         </li>
         <li>
             Callbacks
-        </li>
-        <li>
-            Mouse Events
         </li>
         <li>
             Global Variables
         </li>
         <li>
             DOM manipulation (Document Object Model)
-        </li>
-        <li>
-            HTML5 GeoLocation
         </li>
         <li>
             Mapping Libraries
@@ -814,46 +556,37 @@
     </ul>
 
 </section>
-</section>
-
 
 <section>
-    <h2>In summary</h2>
+    <h2>Continue Learning</h2>
 
     <p>
-        JavaScript makes web pages interactive.
+        To keep learning more about any of these libaries, read the docs and try examples!
     </p>
-    <p class="fragment fade-in">
-        JavaScript code runs on your computer
-    </p>
-    <p class="fragment fade-in">
-        It's what makes most stuff work
-    </p>
-</section>
-
-<section>
-    <h2>Teaser</h2>
-
-    <p>
-        JavaScript can now be used apart from web pages.
-    </p>
-
-    <p class="fragment fade-in">
-        Node.js (another workshop?)
-    </p>
-    <p class="fragment fade-in">
-        Server side code.
-    </p>
-    <p class="fragment fade-in">
-        An entire ecosystem of modules and plugins
-    </p>
+    <ul>
+        <li>
+            <a href="http://leafletjs.org" target="_blank">Leafletjs.org</a>
+        </li>
+        <li>
+            <a href="http://getbootstrap.com/" target="">getbootstrap.com</a>
+        </li>
+        <li>
+            <a href="http://jquery.com/" target="">jquery.com</a>
+        </li>
+        <li>
+            <a href="http://dev.socrata.com/docs/endpoints.html" target="">Socrata API Endpoints</a>
+        </li>
+        <li>
+            <a href="http://highcharts.com/" target="">highcharts.com</a>
+        </li>
+    </ul>
 </section>
 
 <section>
     <h2>Questions?</h2>
 
     <p>
-        This presentation can be found at http://tech-diversified.github.io/Workshops/3worldofjavascript
+        This presentation can be found at http://tech-diversified.github.io/Workshops/CreateADashboard
     </p>
 
 </section>
