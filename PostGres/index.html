@@ -1,0 +1,642 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>TechDiversified Worshop - Crash course: PostGreSQL</title>
+
+    <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+    <meta name="author" content="Ryan Whitley">
+
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/default.css" id="theme">
+    <link rel="stylesheet" href="css/custom.css">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+    <script>
+        if (window.location.search.match(/print-pdf/gi)) {
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = 'css/print/pdf.css';
+            document.getElementsByTagName('head')[0].appendChild(link);
+        }
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+<div class="reveal">
+
+<!-- Any section element inside of this container is displayed as a slide -->
+<div class="slides">
+<section>
+    <h1>Crash Course: PostGreSQL</h1>
+
+    <h3>TechDiversified Technical Workshop</h3>
+
+    <p>
+        <small>Created by <a href="http://www.techdiversified.org">Ryan Whitley</a> / <a
+                href="http://twitter.com/apollolm">@apollolm</a></small>
+    </p>
+</section>
+<section>
+    <h2>Overview</h2>
+
+    <ul>
+        <li>
+            What is PostGreSQL?
+        </li>
+        <li class="fragment fade-in">
+            What is an RDBMS?
+        </li>
+        <li class="fragment fade-in">
+            Rows & Columns
+        </li>
+        <li class="fragment fade-in">
+            PGAdminIII
+        </li>
+        <li class="fragment fade-in">
+            SQL Statements/Queries
+        </li>
+        <li class="fragment fade-in">
+            Connecting to a DB with Node.js
+        </li>
+
+    </ul>
+
+</section>
+
+<section>
+    <h2>PostGreSQL?</h2>
+
+    <p>
+        "Postgres" is an open source Relational Database Management System (RDBMS)
+    </p>
+
+    <p class="fragment fade-in">
+        What are you talking about?
+    </p>
+
+</section>
+<section>
+    <h2>Think: Storage & Retrieval</h2>
+
+    <p>
+        Warehouse Analogy
+    </p>
+
+    <p>
+        Just about any service you can think of uses a database.
+    </p>
+
+    <p>
+        Meant for large volumes of data, but works fine for small efforts.
+    </p>
+
+    <p>
+        Think of a database as a set of containers in which to store your data.
+    </p>
+</section>
+<section>
+    <h2>Containers?</h2>
+
+    <p>
+        Think of an Excel table.
+    </p>
+
+    <img src="img/data-set.png"/>
+
+    <p class="fragment fade-in">
+        A relational database is a collection of tables.
+    </p>
+
+</section>
+<section>
+    <h2>What kind of tables?</h2>
+
+    <h4>
+        Examples:
+    </h4>
+    <ul>
+        <li class="fragment fade-in">Store user information</li>
+        <li class="fragment fade-in">Store products and inventory</li>
+        <li class="fragment fade-in">Store product prices and discount prices</li>
+        <li class="fragment fade-in">Store the locations of all Starbucks stores</li>
+    </ul>
+
+</section>
+<section>
+    <h2>Rows and Columns</h2>
+
+
+    <img style="width: 300px" src="img/columnrow.png"/>
+
+    <p>
+        Just like Excel, tables are made up of rows and columns
+    </p>
+
+    <p class="fragment fade-in">
+        A table's SCHEMA is the set of columns for a particular table
+    </p>
+    <p class="fragment fade-in">
+        Columns have types such as text, integer, double precision & geometry
+    </p>
+
+</section>
+<section>
+    <h2>Relationships</h2>
+
+    <img style="width: 300px" src="img/bailout.gif"/>
+
+
+    <p>
+        Unlike Excel, RDBMS' typically involve tables that can 'talk' to each other.
+    </p>
+
+    <p class="fragment fade-in">
+        The product price information table talks to the product inventory table.
+    </p>
+
+    <p class="fragment fade-in">
+        Why is this useful?
+    </p>
+</section>
+<section>
+    <h2>Normalization</h2>
+
+    <p>
+        Normalization is the act of breaking up your data
+    </p>
+    <ul>
+        <li class="fragment fade-in">Reduce Redundancy</li>
+        <li class="fragment fade-in">Easier Maintenance</li>
+        <li class="fragment fade-in">Update a single location</li>
+        <li class="fragment fade-in">Ask interesting questions</li>
+    </ul>
+</section>
+<section>
+    <h2>Show PGAdminIII</h2>
+
+    <p>
+        The DB is like a black box.
+    </p>
+    <p>
+        You need a way to peek inside and see what's going on
+    </p>
+    <p>
+        Use a DB "Client"
+    </p>
+    <ul>
+        <li class="fragment fade-in">PGAdminIII</li>
+        <li class="fragment fade-in">Server Side Library (Node.js = pg)</li>
+        <li class="fragment fade-in">Other?</li>
+    </ul>
+</section>
+<section>
+    <h2>Follow along</h2>
+    <p>
+        Let's create 2 tables using PGAdminIII
+    </p>
+    <ul>
+        <li>
+            Product
+        </li>
+        <li>
+            Inventory (later)
+        </li>
+    </ul>
+
+    <p>
+        What sort of information would we want to store in the columns of a product table?  Inventory?
+    </p>
+    <p>
+        Let's create some tables.
+    </p>
+</section>
+<section>
+    <h2>Columns</h2>
+    <p>
+        For product table, let's add the columns
+    </p>
+    <ul>
+        <li>
+            description - type 'character varying'
+        </li>
+        <li>
+            title - type 'character varying'
+        </li>
+        <li>
+            category - type 'character varying'
+        </li>
+        <li>
+            brand - type 'character varying'
+        </li>
+        <li>
+            color - type 'character varying'
+        </li>
+        <li>
+            productid - type 'character varying'
+        </li>
+        <li>
+            price - type 'double precision' or 'money'
+        </li>
+        <li>
+            id - type 'serial'
+        </li>
+    </ul>
+
+</section>
+<section>
+    <h2>Hold Up.</h2>
+    <p>
+        I need to mention Keys.
+    </p>
+    <ul>
+        <li>
+            Primary Keys
+        </li>
+        <li>
+            Foreign Keys
+        </li>
+    </ul>
+    <p>
+        Keys are a unique identifier for a row.
+    </p>
+    <p>
+        Add a key based on the id column.
+    </p>
+
+</section>
+<section>
+    <h2>Insert some fake data</h2>
+    <p>
+        Let's add a few rows to these tables to illustrate how they work
+    </p>
+
+    <p>
+        Open the products table (right click in PGAdminIII and choose 'view' -> 'all rows')
+    </p>
+
+</section>
+<section>
+    <h2>CRUD</h2>
+    <p>
+        There are 4 basic high level DB operations:
+    </p>
+
+    <ul>
+        <li>
+            Create - Add new stuff
+        </li>
+        <li>
+            Read - Get stuff out
+        </li>
+        <li>
+            Update - Alter a value in place
+        </li>
+        <li>
+            Delete - Get rid of stuff
+        </li>
+    </ul>
+
+</section>
+
+<section>
+    <h2>Let's ask some questions</h2>
+
+    <p>
+        PostGres and other DBs have their own Query Languages.
+    </p>
+    <p>
+        SQL = Structured Query Languages
+    </p>
+    <p>
+        Most SQL is similar between DB systems. If you know one then you could adapt to the rest.
+    </p>
+
+</section>
+<section>
+    <h2>Query 1</h2>
+
+    <p>
+        Get all rows and columns from the products table
+    </p>
+    <p>
+        SELECT * FROM product;
+    </p>
+    <p>
+        Run it.
+    </p>
+
+</section>
+<section>
+    <h2>Query 2</h2>
+
+    <p>
+        Get only 'Sporting Goods' products
+    </p>
+    <p>
+        SELECT * FROM product<br>
+        WHERE category = 'Sporting Goods';
+    </p>
+    <p>
+        Run it.
+    </p>
+
+</section>
+<section>
+    <h2>You Try</h2>
+
+    <p>
+        Get only 'Adidas' products
+    </p>
+
+    <pre class="fragment fade-in">
+    <code class="sql">
+        SELECT * FROM product
+        WHERE brand = 'Sporting Goods';
+    </code>
+    </pre>
+
+
+
+</section>
+
+<section>
+        <h2>Joins</h2>
+
+        <p>
+            Earlier, we discussed relationships & keys
+        </p>
+
+        <p>
+            In order for the rows inside of tables to talk to each other, they need to have something in common.
+        </p>
+        <p>
+            This is another use for a key.
+        </p>
+        <p>
+            Must be unique to work properly.
+        </p>
+    </section>
+<section>
+    <h2>Create inventory table</h2>
+
+    <ul>
+        <li>
+            productid - type 'character varying' (This is the foreign key)
+        </li>
+        <li>
+            quantity - type 'integer'
+        </li>
+        <li>
+            store - type 'character varying'
+        </li>
+        <li>
+            id - type 'serial'
+        </li>
+    </ul>
+</section>
+<section>
+    <h2>Add some fake data to inventory</h2>
+
+    <p>
+        A new way to add data: INSERT
+    </p>
+
+    <p>
+
+    </p>
+<pre>
+    <code class="sql">
+    INSERT INTO *table* (column1, column2) VALUES (value1, value2)
+    </code>
+</pre>
+</section>
+<section>
+    <h2>Now we can ask more questions</h2>
+
+    <p>
+        <ul>
+            <li>
+                "How many of product x do we have left in stock?"
+            </li>
+            <li>
+                "How many items are in store x?"
+            </li>
+        </ul>
+
+    </p>
+    <p>
+        The benefit is that even if 0 items remain, there's still an entry in the product table to let us know that we should restock.
+    </p>
+</section>
+<section>
+    <h2>How might we improve the design of the inventory table?</h2>
+
+    <p>
+        Reduce the redundancy of the store column by making a Store table
+    </p>
+
+    <p>
+        This makes it easy to ask questions such as "Which stores are in 98126 zip code?"
+    </p>
+    <p>
+        Have more store info such as address, telephone #, hours, pictures.
+    </p>
+    <p>
+        You might imagine how a store inventory system might work. (Auto re-ordering of merchanise when inventory is low)
+    </p>
+
+</section>
+<section>
+    <h2>Aggregations</h2>
+
+    <p>
+        One powerful use of an RDBMS is to summarize/tally large numbers of rows.
+    </p>
+<pre>
+    <code class="sql">
+        SELECT SUM(price) FROM product
+    </code>
+</pre>
+<p>
+    What will this tell us?
+</p>
+
+</section>
+<section>
+    <h2>Deleting</h2>
+
+    <p>
+        Delete a row
+    </p>
+<pre>
+    <code class="sql">
+        DELETE FROM product where id = 2;
+    </code>
+</pre>
+    <p>
+        What will happen?
+    </p>
+
+</section>
+<section>
+    <h2>Updating</h2>
+
+    <p>
+        Find an existing row and update some values
+    </p>
+<pre>
+    <code class="sql">
+        UPDATE product SET price = 2.99 where id = 2;
+    </code>
+</pre>
+    <p>
+        What will happen?  What if you leave off the where clause?
+    </p>
+
+</section>
+<section>
+    <h2>Questions - Review</h2>
+
+    <p>
+        We can now create a new DB, create tables, add data and query data.
+    </p>
+    <p>
+        Any questions?
+    </p>
+
+</section>
+<section>
+    <h2>Let's connect from node.js</h2>
+
+    <p>
+        Show a bare bones node app that connects to our DB and returns info.
+    </p>
+    <p>
+        DEMO
+    </p>
+
+</section>
+
+<section>
+    <h2>Recap</h2>
+
+    <p>
+        What topics did we just cover?
+    </p>
+    <ul>
+        <li>
+            Relational Database Management Systems (RDBMS)
+        </li>
+        <li>
+            Normalization (a little bit)
+        </li>
+        <li>
+            SQL Queries - Create, Read, Insert, Delete (CRUD)
+        </li>
+        <li>
+            Joins
+        </li>
+        <li>
+            Primary & Foreign Keys
+        </li>
+        <li>
+            PGAdminIII Interface
+        </li>
+        <li>
+            Connecting to PostGres from Node.js
+        </li>
+    </ul>
+
+</section>
+
+
+<section>
+    <h2>Questions?</h2>
+
+    <p>
+        This presentation can be found at http://tech-diversified.github.io/Workshops/PostGres
+    </p>
+
+</section>
+
+
+</div>
+
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.min.js"></script>
+
+<script>
+
+    // Full list of configuration options available here:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Parallax scrolling
+        // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+        // parallaxBackgroundSize: '2100px 900px',
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+            {
+                src: 'lib/js/classList.js', condition: function () {
+                return !document.body.classList;
+            }
+            },
+            {
+                src: 'plugin/markdown/marked.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            }
+            },
+            {
+                src: 'plugin/markdown/markdown.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            }
+            },
+            {
+                src: 'plugin/highlight/highlight.js', async: true, callback: function () {
+                hljs.initHighlightingOnLoad();
+            }
+            },
+            {
+                src: 'plugin/zoom-js/zoom.js', async: true, condition: function () {
+                return !!document.body.classList;
+            }
+            },
+            {
+                src: 'plugin/notes/notes.js', async: true, condition: function () {
+                return !!document.body.classList;
+            }
+            }
+        ]
+    });
+
+</script>
+
+</body>
+</html>
