@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>TechDiversified Worshop - The World of JavaScript</title>
+
+    <style>
+        .section{
+            margin: 20px 0;
+        }
+
+        .gps_ring {
+            border: 2px solid #51F1FF;
+            -webkit-border-radius: 30px;
+            border-radius: 30px;
+            height: 18px;
+            width: 18px;
+            -webkit-animation: pulsate 1s ease-out;
+            -webkit-animation-iteration-count: infinite;
+            opacity: 0.0
+        }
+        @-webkit-keyframes pulsate {
+            0% {-webkit-transform: scale(0.1, 0.1); opacity: 0.0;}
+            50% {opacity: 1.0;}
+            100% {-webkit-transform: scale(1.2, 1.2); opacity: 0.0;}
+        }
+
+    </style>
+</head>
+
+<body>
+<h1>DooHickey.com</h1>
+
+<div id="controlArea">
+    <span>Welcome to Doohickey.com.  Click the button to see some amazing things.</span>
+</div>
+<div class="section">
+    <input id="button1" type="button" value="Click Me!"/>
+
+    <div id="resultArea" style="padding-top: 50px;">
+        When you click the button, this should change.
+    </div>
+</div>
+<div class="section">
+    <div id="mouseOverArea" style="height: 100px; width: 100px; padding: 20px; background-color: green;color: white;">
+        Move your mouse over this area.
+    </div>
+    <span id="mouseCounter">You've moused over 0 times.</span>
+</div>
+<div class="section">
+    <span>Map of your current location</span>
+
+    <div id="mapContainer" style="height: 200px; width: 200px; padding: 20px; color: white;">
+
+    </div>
+</div>
+
+<div class="section">
+    <input type="button" id="hammerTimeButton" value="Stop...Hammertime!">
+    <div id="hammerTimeContainer">
+
+    </div>
+</div>
+
+</body>
+</html>
